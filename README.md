@@ -7,7 +7,8 @@ creative challenge. Players pay a small fee per answer; GenLayer validators judg
 PARTIAL / WRONG, a score and written reasoning that stays public). The first SOLVED answer takes the vault. Rejected answers can be
 appealed with a bond, and a vault nobody solves refunds everyone.
 
-* Live app: see the repo "About" link / deployment notes below
+* Live app: https://riddlevault.vercel.app
+* Contract (Studionet): `0xaadC5cd5e5067CBA6892AC12839747157D31d9F8`
 * Network: GenLayer **Studionet** (chain 61999, gasless). Points only, no real money.
 * Contract: `contracts/riddlevault.py` · Trust model: [`docs/TRUST_MODEL.md`](docs/TRUST_MODEL.md)
 

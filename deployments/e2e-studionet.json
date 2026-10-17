@@ -1,0 +1,333 @@
+{
+  "network": "studionet",
+  "address": "0xaadC5cd5e5067CBA6892AC12839747157D31d9F8",
+  "wallets": {
+    "A": "0xBb9E609bf277a0Ffb0018515d0a850037C2b17c3",
+    "B": "0x4114320e6217407814992C42DC4573ea85A00b60"
+  },
+  "steps": [
+    {
+      "step": "create expiry vault (60s)",
+      "wallet": "A",
+      "method": "create_vault",
+      "tx": "0xa653a1f9b9353ba6a702a422af054fdbff16dcb601651e3003c30fee521625aa",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xa653a1f9b9353ba6a702a422af054fdbff16dcb601651e3003c30fee521625aa",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 13
+    },
+    {
+      "step": "B attempts expiry vault (wrong)",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0xd5f5d5406f60d929d9aa38f76c9be342b22b8c6892125da342e88e91fd8e4bbf",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xd5f5d5406f60d929d9aa38f76c9be342b22b8c6892125da342e88e91fd8e4bbf",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 17
+    },
+    {
+      "step": "create vague vault",
+      "wallet": "A",
+      "method": "create_vault",
+      "tx": "0xf54a4ab69f2ef6399cfad40258ae3b42621c67f52c50e4c8e4ec80a6e354fa7c",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xf54a4ab69f2ef6399cfad40258ae3b42621c67f52c50e4c8e4ec80a6e354fa7c",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 9
+    },
+    {
+      "step": "create SEALED vault",
+      "wallet": "A",
+      "method": "create_vault",
+      "tx": "0x5245c5f8a2e3e3eed19a023afe4e16de3d1e3ebbfeb515662370855c472ca630",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x5245c5f8a2e3e3eed19a023afe4e16de3d1e3ebbfeb515662370855c472ca630",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 13
+    },
+    {
+      "step": "B attempts sealed vault (wrong)",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0x451c7a2df7fb1e6d4f5930df09c96cac0ff217ae0c33a9ebdfd37813a5c56d85",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x451c7a2df7fb1e6d4f5930df09c96cac0ff217ae0c33a9ebdfd37813a5c56d85",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 17
+    },
+    {
+      "step": "B attempts sealed vault (correct, hash match)",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0xbde972d6d550622c7614b8915c2b8c289cb999c798664b3fb0ebf10c7c21b687",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xbde972d6d550622c7614b8915c2b8c289cb999c798664b3fb0ebf10c7c21b687",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 4
+    },
+    {
+      "step": "creator reveals sealed answer",
+      "wallet": "A",
+      "method": "reveal_answer",
+      "tx": "0x08f711bc8bb9a7df20545cebf332e0d061a3c42a395a9ff70c400f2d41d8182e",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x08f711bc8bb9a7df20545cebf332e0d061a3c42a395a9ff70c400f2d41d8182e",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 9
+    },
+    {
+      "step": "late attempt on solved vault reverts",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0x0740c8be1066ed43c1a4fa16ee7f2ceaed3e21d90018940ed8430fc021e64fd1",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x0740c8be1066ed43c1a4fa16ee7f2ceaed3e21d90018940ed8430fc021e64fd1",
+      "status": "ACCEPTED",
+      "execution": "ERROR",
+      "ok": true,
+      "expected": "revert",
+      "seconds": 5
+    },
+    {
+      "step": "create RUBRIC vault (poem)",
+      "wallet": "A",
+      "method": "create_vault",
+      "tx": "0xbddf1859a885c5c4da311789d91d36d3613cf347945fc494f4511a27037926cf",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xbddf1859a885c5c4da311789d91d36d3613cf347945fc494f4511a27037926cf",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 13
+    },
+    {
+      "step": "B attempts rubric vault (wrong poem)",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0xe85c50bf89bcb221a382415199ed86662b07ed635b1fbb23ad5ed218e8bed1ed",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xe85c50bf89bcb221a382415199ed86662b07ed635b1fbb23ad5ed218e8bed1ed",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 13
+    },
+    {
+      "step": "B appeals the wrong poem (bond)",
+      "wallet": "B",
+      "method": "appeal_attempt",
+      "tx": "0xe088570c2053ecf3f436e0a300e6c07cd80c5a41c84a99dbee9f12ea6650b074",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xe088570c2053ecf3f436e0a300e6c07cd80c5a41c84a99dbee9f12ea6650b074",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 13
+    },
+    {
+      "step": "B submits a valid S-poem",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0x382eea2cac9ed7cdc980f4cf364a071b2b778a8f3d5f3391937d584a153cc3b0",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x382eea2cac9ed7cdc980f4cf364a071b2b778a8f3d5f3391937d584a153cc3b0",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 13
+    },
+    {
+      "step": "expire early call reverts on solved vault",
+      "wallet": "B",
+      "method": "expire",
+      "tx": "0x12cbcec1ae313f2d789868d9d36c9bf669f2355396f04177f15b693fdeec0954",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x12cbcec1ae313f2d789868d9d36c9bf669f2355396f04177f15b693fdeec0954",
+      "status": "ACCEPTED",
+      "execution": "ERROR",
+      "ok": true,
+      "expected": "revert",
+      "seconds": 9
+    },
+    {
+      "step": "anyone expires the unsolved vault",
+      "wallet": "B",
+      "method": "expire",
+      "tx": "0xe799930759f2cd9279e40342eb95265f50fbf705175d28a813a7c4f70b56a951",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xe799930759f2cd9279e40342eb95265f50fbf705175d28a813a7c4f70b56a951",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true,
+      "expected": "success",
+      "seconds": 4
+    }
+  ],
+  "checks": [
+    {
+      "check": "expiry vault created OPEN",
+      "pass": true,
+      "detail": {
+        "status": "OPEN",
+        "reason": ""
+      }
+    },
+    {
+      "check": "vague vault rejected by AI screen, prize not locked",
+      "pass": true,
+      "detail": {
+        "status": "REJECTED",
+        "reason": "The riddle and criteria are entirely subjective and based on the creator's private thoughts and opinions."
+      }
+    },
+    {
+      "check": "sealed vault OPEN, answer not stored on-chain",
+      "pass": true,
+      "detail": {
+        "status": "OPEN",
+        "reason": ""
+      }
+    },
+    {
+      "check": "wrong sealed attempt is not SOLVED, has reasoning",
+      "pass": true,
+      "detail": {
+        "answer": "the sleepy cat",
+        "appeal_argument": "",
+        "appeal_reasoning": "",
+        "appeal_score": 0,
+        "appeal_verdict": "",
+        "appealed": false,
+        "bond_forfeited": 0,
+        "checks": [
+          true,
+          false
+        ],
+        "fee_paid": 5,
+        "id": 0,
+        "overturned": false,
+        "player": "0x4114320e6217407814992C42DC4573ea85A00b60",
+        "reasoning": "The answer 'the sleepy cat' is exactly three words long, satisfying criterion 1. However, the well-known pangram ends with 'the lazy dog,' not 'the sleepy cat,' so criterion 2 is not satisfied.",
+        "score": 50,
+        "timestamp": 1792251460,
+        "verdict": "PARTIAL"
+      }
+    },
+    {
+      "check": "sealed vault SOLVED by B, payout = prize + 2 fees",
+      "pass": true,
+      "detail": {
+        "status": "SOLVED",
+        "payout": 110
+      }
+    },
+    {
+      "check": "winner balance paid out",
+      "pass": true,
+      "detail": {
+        "before": 1295,
+        "after": 1395
+      }
+    },
+    {
+      "check": "answer revealed and verified against hash",
+      "pass": true,
+      "detail": "the lazy dog"
+    },
+    {
+      "check": "rubric vault OPEN",
+      "pass": true,
+      "detail": {
+        "status": "OPEN",
+        "reason": ""
+      }
+    },
+    {
+      "check": "wrong poem judged not SOLVED with reasoning + score",
+      "pass": true,
+      "detail": {
+        "verdict": "WRONG",
+        "score": 33,
+        "reasoning": "The answer contains only three lines, not four, and its lines begin with T, W, and G rather than S. The content is nonetheless about the sea and the shore, so the topic criterion holds."
+      }
+    },
+    {
+      "check": "appeal recorded with a second verdict and reasoning",
+      "pass": true,
+      "detail": {
+        "appeal": "WRONG",
+        "overturned": false,
+        "reasoning": "The answer has only 3 lines instead of required 4. None of the lines begin with letter S as required."
+      }
+    },
+    {
+      "check": "upheld appeal forfeits bond into pot",
+      "pass": true,
+      "detail": 20
+    },
+    {
+      "check": "rubric vault SOLVED by B with payout",
+      "pass": true,
+      "detail": {
+        "status": "SOLVED",
+        "payout": 130
+      }
+    },
+    {
+      "check": "expired vault: status EXPIRED and fees refunded",
+      "pass": true,
+      "detail": {
+        "status": "EXPIRED",
+        "refunded": 5
+      }
+    },
+    {
+      "check": "leaderboard lists B first with 2 wins",
+      "pass": true,
+      "detail": {
+        "address": "0x4114320e6217407814992C42DC4573ea85A00b60",
+        "attempts": 12,
+        "partials": 2,
+        "winnings": 610,
+        "wins": 5
+      }
+    },
+    {
+      "check": "stats consistent",
+      "pass": true,
+      "detail": {
+        "appeals": 3,
+        "attempts": 12,
+        "by_status": {
+          "EXPIRED": 2,
+          "OPEN": 0,
+          "REJECTED": 2,
+          "SOLVED": 5
+        },
+        "overturned": 0,
+        "prize_locked": 0,
+        "users": 2,
+        "vaults": 9
+      }
+    },
+    {
+      "check": "points conserved: both wallets hold exactly the 2 x 1000 starting points between them",
+      "pass": true,
+      "detail": {
+        "endTotal": 2000
+      }
+    }
+  ]
+}
