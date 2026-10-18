@@ -8,7 +8,7 @@ PARTIAL / WRONG, a score and written reasoning that stays public). The first SOL
 appealed with a bond, and a vault nobody solves refunds everyone.
 
 * Live app: https://riddlevault.vercel.app
-* Contract (Studionet): `0xaadC5cd5e5067CBA6892AC12839747157D31d9F8`
+* Contract (Studionet): `0x13599863adAa58FF5916Afe5Fd2A557065000aC1`
 * Network: GenLayer **Studionet** (chain 61999, gasless). Points only, no real money.
 * Contract: `contracts/riddlevault.py` · Trust model: [`docs/TRUST_MODEL.md`](docs/TRUST_MODEL.md)
 
@@ -73,7 +73,7 @@ Full version: [`docs/TRUST_MODEL.md`](docs/TRUST_MODEL.md).
 * **Disagreement.** No agreement means no state change and no fee. Malformed model output reverts. Players can appeal, and GenLayer's protocol-level appeal also applies.
 * **Leakage.** Sealed vaults store only a hash and the AI never sees the secret. Honest tradeoff: a short guessable answer can be brute-forced from the hash.
 * **No profit from dead vaults.** On expiry the creator only gets their own prize back; players get every fee back.
-* **Residual risks** (documented, not hidden): LLM inconsistency on borderline answers, answer front-running, creator self-play with a second wallet, Sybil spam with free points, prompt injection (including via the appeal argument), public reasoning hinting at rubric solutions, validator collusion, test-network trust.
+* **Residual risks** (documented, not hidden): LLM inconsistency on borderline answers, answer front-running, creator self-play with a second wallet, Sybil spam with free points, prompt injection (answers, appeal arguments and first-panel reasoning are fenced as untrusted data, which reduces but cannot remove the risk), public reasoning hinting at rubric solutions, validator collusion, test-network trust.
 
 ## Repo layout
 
@@ -120,6 +120,6 @@ The sealed-answer hash is computed in the browser (`frontend/lib/seal.ts`) and m
 ## Deployment
 
 See `deployments/studionet.json` for the current Studionet contract address and `deployments/e2e-studionet.json` for the full
-on-chain end-to-end log. Studionet state is temporary and may be reset; redeploy with `npm run deploy:studionet` if so.
+on-chain end-to-end log. Studionet state is temporary and may be reset; redeploy with `npm run deploy:studionet` if so. `scripts/e2e-appeal.mjs` tries to overturn an appeal on-chain (`deployments/e2e-studionet-appeal.json`).
 
 MIT licensed.

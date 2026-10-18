@@ -9,6 +9,7 @@
     "schema": "node scripts/schema-check.mjs",
     "deploy:studionet": "node scripts/deploy.mjs",
     "e2e:studionet": "node scripts/e2e.mjs",
+    "e2e:appeal": "node scripts/e2e-appeal.mjs",
     "lint:contract": "genvm-lint check contracts/riddlevault.py",
     "test:contract": "pytest tests/direct/ -v",
     "dev": "cd frontend && npm run dev",

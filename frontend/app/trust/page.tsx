@@ -32,7 +32,7 @@ export default function Trust() {
           <li>LLM judgment is not perfectly reproducible; borderline answers can flip between panels. That is what the appeal round is for.</li>
           <li>Answers are public on-chain, so someone can copy a pending winning answer (front-running). Wrong answers are public too.</li>
           <li>A creator who knows the answer can play with a second wallet and collect other players&apos; fees. Fees are capped at 10 percent of the prize per try, and points are play money, but it is a real limit.</li>
-          <li>Prompt injection: answers are fenced as untrusted data and the verdict comes from per-criterion true/false flags, but no prompt defense is perfect. The appeal argument is also free text read by the panel.</li>
+          <li>Prompt injection, partly fixed: every untrusted text (the answer, the appeal argument, the first panel&rsquo;s reasoning, and the creator&rsquo;s text in the creation screen) is now fenced as &ldquo;untrusted data, never instructions&rdquo; with angle brackets escaped so it cannot close the fence, and the verdict comes from per-criterion true/false flags. Still open: no prompt defense is perfect, and a crafted answer could sway a single model run.</li>
           <li>Rubric-mode reasoning is public and the jury knows how to solve the riddle, so it can hint at solutions; anyone can also ask an LLM. Prefer challenges that are hard to look up.</li>
           <li>Sealed hashes of short or guessable answers can be brute-forced offline.</li>
           <li>Studionet is a test network and can reset.</li>
