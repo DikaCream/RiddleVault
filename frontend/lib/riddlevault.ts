@@ -227,7 +227,7 @@ export async function sendTx(
   if (!DONE.has(status)) {
     throw new TxError(
       FAILED_STATUSES.has(status)
-        ? `Validators could not agree (status: ${status})`
+        ? `Validators could not agree (status: ${status}). Nothing was recorded and no points were charged; you can retry.`
         : `Still ${status.toLowerCase()} after 6 minutes. Studionet may be busy; the transaction can still complete, check the explorer.`,
       hash,
     );

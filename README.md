@@ -12,6 +12,34 @@ appealed with a bond, and a vault nobody solves refunds everyone.
 * Network: GenLayer **Studionet** (chain 61999, gasless). Points only, no real money.
 * Contract: `contracts/riddlevault.py` · Trust model: [`docs/TRUST_MODEL.md`](docs/TRUST_MODEL.md)
 
+## Why GenLayer
+
+The hard question here is *"does this free-text answer satisfy this written standard?"* That is subjective, non-deterministic
+judgment, so none of the usual tools fit:
+
+* **Oracles (Chainlink, Pyth)** deliver objective data from known sources. There is no feed for "is this a valid solution".
+* **A normal smart contract** can only compare exact values (we use that for `SEALED` mode's hash match, and nowhere else).
+* **The creator or an admin as judge** would be the party who profits from rejecting solvers.
+* **One AI API** means one operator and one model decide who wins, with nothing on-chain to agree on or challenge.
+
+On GenLayer each validator runs its own LLM on the same locked criteria and the network only accepts a verdict that validators
+reproduce (equivalence principle via `gl.vm.run_nondet_unsafe`: the leader proposes, every validator re-runs and must reach the identical
+SOLVED / PARTIAL / WRONG). AI is used only for judgment; the verdict and score are computed deterministically from per-criterion
+true/false flags, and money rules are plain contract code.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  U[Player / creator<br/>MetaMask] --> F[Next.js app on Vercel]
+  F -- genlayer-js read/write --> C[(RiddleVault contract<br/>Studionet)]
+  C -- create screen + each answer --> L{Leader validator<br/>LLM judgment}
+  L -- proposed verdict --> V[Validators re-run LLM<br/>accept only if verdict identical]
+  V -- agreed --> C
+  V -. disagree .-> X[No state change, no fee]
+  C --> S[Plain code: hash match for SEALED,<br/>payout, refunds, appeals]
+```
+
 ## How a vault works
 
 1. **Forge.** The creator writes the riddle, 2-6 objective acceptance criteria, prize, attempt fee, limits and a deadline.
@@ -41,11 +69,11 @@ Full version: [`docs/TRUST_MODEL.md`](docs/TRUST_MODEL.md).
 
 * **Locked terms.** Riddle, criteria, prize, fee, limits and deadline cannot change after creation. The creator cannot cancel, withdraw or play their own vault.
 * **Judgment sources.** (1) an AI creation screen, (2) the validator jury for each answer, (3) a plain hash comparison in sealed mode. Never the creator.
-* **Agreement.** Validators re-run the judgment independently and accept the leader only on an identical verdict. They report per-criterion true/false; the contract computes verdict and score.
+* **Agreement.** Validators re-run the judgment independently and accept the leader only on an identical verdict (only the verdict is compared; stored checks, score and reasoning are the leader's). They report per-criterion true/false; the contract computes verdict and score.
 * **Disagreement.** No agreement means no state change and no fee. Malformed model output reverts. Players can appeal, and GenLayer's protocol-level appeal also applies.
 * **Leakage.** Sealed vaults store only a hash and the AI never sees the secret. Honest tradeoff: a short guessable answer can be brute-forced from the hash.
 * **No profit from dead vaults.** On expiry the creator only gets their own prize back; players get every fee back.
-* **Residual risks** (documented, not hidden): LLM inconsistency on borderline answers, answer front-running, creator self-play with a second wallet, Sybil spam with free points, prompt injection, test-network trust.
+* **Residual risks** (documented, not hidden): LLM inconsistency on borderline answers, answer front-running, creator self-play with a second wallet, Sybil spam with free points, prompt injection (including via the appeal argument), public reasoning hinting at rubric solutions, validator collusion, test-network trust.
 
 ## Repo layout
 
@@ -71,6 +99,9 @@ Views: `get_vault`, `get_vaults(status, offset, limit)`, `get_attempts`, `get_us
 pip install -r requirements.txt
 genvm-lint check contracts/riddlevault.py
 pytest tests/direct/ -q
+
+# frontend checks
+cd frontend && npm install && npm run lint && npm run build && cd ..
 
 # deploy + e2e (needs a funded-by-nothing Studionet key in .env, see .env.example)
 npm install
