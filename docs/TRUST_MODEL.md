@@ -6,6 +6,23 @@ decides what, what is locked, what can go wrong, and what we do **not** protect 
 
 Points are play money held inside the contract (each wallet can claim 1000 once). Nothing here moves real value.
 
+## 0. Why this needs GenLayer (and not an oracle or a normal contract)
+
+The question RiddleVault must answer on-chain is "does this free-text answer satisfy this written standard?", for
+riddles, wordplay, short code and creative challenges where many different strings can be correct.
+
+| Option | Why it does not work here |
+|---|---|
+| Price or data oracle (Chainlink, Pyth) | Delivers objective numbers from known sources. There is no feed for "is this answer a valid solution". |
+| Plain smart contract | Can only do exact comparison (hashes, numbers). That covers one secret string (we use it for `SEALED` mode) but not creative or many-answer tasks. |
+| Creator or admin decides | Reintroduces the party who profits from the vault (they could reject every solver). |
+| Single off-chain AI API | One operator and one model decide who wins, with no on-chain agreement and no way to challenge. |
+| **GenLayer** | Several validators each run their own LLM on the same locked criteria and must reach the same verdict (the Equivalence Principle, here via `gl.vm.run_nondet_unsafe`: leader proposes, validators re-run and compare). Disagreement means nothing is recorded. Anyone can challenge via the appeal round or GenLayer's protocol appeal. |
+
+Where we deliberately do **not** use AI: in `SEALED` mode the win condition is a hash comparison in plain contract
+code, and the verdict/score are computed deterministically from per-criterion booleans. AI is used only where
+judgment is the actual product.
+
 ## 1. What is locked at creation
 
 `create_vault` stores, once, and the contract exposes **no function that edits any of it**:
@@ -50,8 +67,9 @@ Validators also reject a leader result that is malformed (not a dict, or a verdi
 free-text reasoning is not compared (two honest validators phrase it differently), but the verdict, which decides
 money, must match. The creation screen works the same way and compares the valid / invalid decision.
 
-Because the verdict is derived from per-criterion true/false flags, validators agree whenever they agree on each
-criterion, which is a much narrower target than "do you also feel this is a 7/10".
+Because the verdict is derived from per-criterion true/false flags, validators are asked a narrow, checkable
+question per criterion, which is a much more stable target than "do you also feel this is a 7/10". It is still an
+LLM: borderline criteria can flip, and agreement on the verdict does not prove the verdict is right.
 
 ## 4. Disagreement handling
 
@@ -60,8 +78,9 @@ criterion, which is a much narrower target than "do you also feel this is a 7/10
   player can simply retry. The contract takes the attempt fee only after the judgment has been agreed.
 * **The model returns garbage (non-JSON, no checks list):** the call raises, the transaction reverts, nothing is charged.
 * **A borderline answer flips between runs:** the first agreed verdict stands, but the player can appeal (section 5).
-* **Protocol-level appeal:** independently of this contract, GenLayer lets anyone appeal any transaction to a larger
-  validator set (`genlayer appeal <txId>`). The contract's own appeal below is the in-app, bonded version.
+* **Protocol-level appeal:** independently of this contract, GenLayer's consensus has its own appeal mechanism that
+  re-runs a transaction with a larger validator set (check the GenLayer docs for how to trigger it on your network; this
+  contract does not wrap or depend on it). The contract's own appeal below is the in-app, bonded version.
 
 ## 5. Challenge process (appeal with bond)
 
@@ -129,10 +148,19 @@ alternative answer; if that matters, use rubric mode.
    unsolvable vaults. Players should treat a vault from an unknown creator accordingly.
 4. **Sybil spam.** Points are free (1000 per wallet), so attempt fees do not deter a determined spammer. The total
    attempt cap bounds the damage but a spammer can exhaust a vault's slots (denial of service on that vault).
-5. **Prompt injection.** Answers are fenced as untrusted data and the verdict is derived from boolean checks, but no
+5. **Prompt injection.** The appeal argument (player free text, 20-400 chars) and the first panel's reasoning are placed in
+   the appeal prompt **without** an untrusted-data fence, so the appeal round is more exposed than the first judgment.
+   Answers in the first judgment are fenced as untrusted data and the verdict is derived from boolean checks, but no
    prompt defense is perfect. A cleverly crafted answer could still sway a single model run; consensus across validators
    and the appeal round make a consistent exploit harder, not impossible.
 6. **Brute-forceable sealed hashes** (see section 7).
+   **Public reasoning and LLM-solvable riddles.** In `RUBRIC` mode the jury effectively knows a solution, and its
+   reasoning for wrong guesses is public, so it can hint at the answer to later players (the prompt asks it not to write
+   the full answer, which is not a guarantee). Any player can also ask an LLM. Rubric vaults are therefore best for
+   creative or constraint-based challenges, not trivia an LLM answers instantly.
+   **Collusion.** A validator majority colluding with a player is out of scope; the contract trusts the network's consensus.
+   Studionet's validators are operated by the Studio, not an independent staked set.
+   **Creation-screen false rejects.** The AI screen can wrongly reject a fair vault (nothing is locked, the creator can reword and retry).
 7. **Validators judging without the secret** (sealed mode) can only give feedback, never a win; PARTIAL there means "fits
    the criteria", not "close to the secret".
 8. **Appeal deadline = vault deadline.** An attempt made in the last moments cannot be appealed after expiry.
