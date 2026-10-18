@@ -1,0 +1,128 @@
+{
+  "network": "studionet",
+  "address": "0x13599863adAa58FF5916Afe5Fd2A557065000aC1",
+  "wallets": {
+    "A": "0xBb9E609bf277a0Ffb0018515d0a850037C2b17c3",
+    "B": "0x4114320e6217407814992C42DC4573ea85A00b60"
+  },
+  "when": "2026-10-18T13:55:08.627Z",
+  "overturned": true,
+  "runs": [
+    {
+      "design": "Nine word winter sentence",
+      "vaultId": 4,
+      "firstVerdict": "SOLVED",
+      "outcome": "first panel already SOLVED, nothing to appeal"
+    },
+    {
+      "design": "Seven letter fish word",
+      "vaultId": 5,
+      "firstVerdict": "WRONG",
+      "firstReasoning": "It is a single sentence and it is about the sea, mentioning waves, a reef, and a dolphin. But it has more than one seven-letter word, and it also includes a word longer than seven letters.",
+      "appealVerdict": "SOLVED",
+      "appealReasoning": "The sentence describes a sea scene and contains only one seven-letter word, which is 'dolphin'. All other words have five letters or fewer, satisfying all length constraints.",
+      "overturned": true,
+      "bondForfeited": 0,
+      "vault": {
+        "answer_hash": "",
+        "attempt_fee": 5,
+        "attempts": 1,
+        "bond": 20,
+        "category": "LOGIC",
+        "created_at": 1792331662,
+        "creator": "0xBb9E609bf277a0Ffb0018515d0a850037C2b17c3",
+        "criteria": [
+          "The answer is a single sentence about the sea.",
+          "Exactly one word in the sentence has seven letters.",
+          "No word in the sentence has more than seven letters."
+        ],
+        "expired": false,
+        "expires_at": 1792333462,
+        "fees_in": 5,
+        "id": 5,
+        "max_per_player": 3,
+        "max_total": 10,
+        "mode": "RUBRIC",
+        "nonce": "",
+        "payout": 105,
+        "pot": 105,
+        "prize": 100,
+        "refunded": 0,
+        "reject_reason": "",
+        "revealed_answer": "",
+        "riddle": "Write one sentence about the sea that contains exactly one word of seven letters and no word longer than seven letters.",
+        "solved_at": 1792331697,
+        "status": "SOLVED",
+        "title": "Seven letter fish word",
+        "winner": "0x4114320e6217407814992C42DC4573ea85A00b60",
+        "winning_attempt": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step": "create vault: Nine word winter sentence",
+      "wallet": "A",
+      "method": "create_vault",
+      "tx": "0xb6ceb5a23fe12a8735c6fd2cfb51b44d51e99efcb38166a738819e4d0485a1a5",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xb6ceb5a23fe12a8735c6fd2cfb51b44d51e99efcb38166a738819e4d0485a1a5",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true
+    },
+    {
+      "step": "B attempts",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0xd3da38263279b0c0a078f43f46b7436fcc0cf71bbb2e0dea59bb534143db4e43",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xd3da38263279b0c0a078f43f46b7436fcc0cf71bbb2e0dea59bb534143db4e43",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true
+    },
+    {
+      "step": "create vault: Seven letter fish word",
+      "wallet": "A",
+      "method": "create_vault",
+      "tx": "0xaea350a24a09ae82dfc8b0f9330465f4911855aa47dd2aa60a9119da679433b3",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0xaea350a24a09ae82dfc8b0f9330465f4911855aa47dd2aa60a9119da679433b3",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true
+    },
+    {
+      "step": "B attempts",
+      "wallet": "B",
+      "method": "submit_answer",
+      "tx": "0x35f6b09d0df9cf1e6c8cace48b8a8846ffabdeb03cd8a56e07551ec8126dcc9f",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x35f6b09d0df9cf1e6c8cace48b8a8846ffabdeb03cd8a56e07551ec8126dcc9f",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true
+    },
+    {
+      "step": "B appeals with the explicit count",
+      "wallet": "B",
+      "method": "appeal_attempt",
+      "tx": "0x4e7f7ef9ab94df45010f4814f276debd974e204ae481dc871d0efaf32537f7e9",
+      "explorer": "https://explorer-studio.genlayer.com/transactions/0x4e7f7ef9ab94df45010f4814f276debd974e204ae481dc871d0efaf32537f7e9",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "ok": true
+    }
+  ],
+  "stats": {
+    "appeals": 2,
+    "attempts": 7,
+    "by_status": {
+      "EXPIRED": 1,
+      "OPEN": 0,
+      "REJECTED": 1,
+      "SOLVED": 4
+    },
+    "overturned": 1,
+    "prize_locked": 0,
+    "users": 2,
+    "vaults": 6
+  }
+}
